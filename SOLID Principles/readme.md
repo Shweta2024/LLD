@@ -227,24 +227,71 @@ SaveInvoiceToDB    SaveInvoiceToFile    X       Y.....(any new functionality/ext
 
 </details>
 
-<br>
 
 
-<details>        <sumarry>        <h2> Liskov Substitution Principle(LSP) </h2>        </sumarry>        
+<details>   <summary>      <h2> Liskov Substitution Principle(LSP) </h2>        </summary>        
+
+- We should be able to substitute the object of the base/parent class with the object of the child class, without breaking the behaviour of thr program.
+- Eg.: If Class B is a subclass of Class A, then we should be able to replace the object of Class A with the object of Class B, without breaking the behaviour of the program.
+- So, it basically means that if the object of the parent class was providing a certain behaviour, then on substituting the object with that of the child class must not alter the behaviour. So, whatever is expected to happen should happen even if we change the base class object with the child class object. 
+
+          NOTE: Subclass should extend the funtionalities of the parent class not narrow it down. 
 
 
+### EXAMPLE:-
+
+```java
 
 
+interface Vehicle{
+    void turnOnEngine();
+    void accelerate();
+}
 
 
+class Bike implements Vehicle{
+    
+    boolean isEngineOn;
+    int speed;
+
+    public void turnOnEngine(){
+        // logic to turn on the engine
+        isEngineOn = true;
+    }
+    
+    public void accelerate(){
+        speed = speed + 20;
+    }
+}
 
 
+class Cycle implements Vehicle{
+    
+    int speed;
+
+    // this method throws an error 
+    public void turnOnEngine(){
+        throw new AssertionError(detailMessage: "there is no engine");
+    }
+    
+    public void accelerate(){
+        // logic for accelerating
+    }
+}
 
 
+```
+
+- The two classes Bike and Cycle implements the Vehicle interface.
+- If we have an object of the Vehicle class, then we can replace it with the object of the Bike class, without any issues. The reason being, with the object of Bike class we'll be able to implement both the functionalities of the parent class, so we are following LSP in the Bike class.
+- However, if we use the object of the Cycle class, then we won't be able to access both the functionalities, it is because in case of Cycle the ``turnOnEngine()`` method throws an error, because a Cyle doesn't has an engine because of which we won't require this method at all. Hence, we are narrowing down the capabilities of the parent class(i.e. Vehicle in this case), so it is not following LSP, because we can't replace the object of Vehicle class with that of Cycle class.
 
 
+                                 Parent
+                      /     /      |      \      \
+                  child1  child2  child3  child4 ...
 
-
-
-
+  - So accroding to LSP, we should be able to substitute the object of the parent class with its child class without breaking the behaviour of the program.
+    
+ 
 </details>
