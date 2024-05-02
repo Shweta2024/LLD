@@ -11,9 +11,9 @@ SOLID is the acronym for the below 05 principles:-
 
 S: Single Responsibility Principle(SRP)
 
-O: Open/Close Principle 
+O: Open/Closed Principle 
 
-L: 
+L: Liskov Substitution Principle(LSP)
 
 I: 
 
@@ -62,24 +62,23 @@ change then it can be done in an organised manner and without affecting other mo
 
 ### EXAMPLE-1
 
-```cpp
+```java
 
 class Invoice{
-    public:
-    int calculateInvoice(){
+    public calculateInvoice(){
         // logic to find out invoice
         int total = price * quantity;
         return total;
     }
 
-    void printInvoice(){
+    public void printInvoice(){
         // print the invoice
     }
 
-    void saveToDB(){
+    public void saveToDB(){
         // save the invoice to db
     }
-};
+}
 
 
 ```
@@ -96,31 +95,29 @@ So we can see that there are 3 reasons for the class to change and hence it does
 
 In the below code, each of the classes has only ONE ``responsibility`` and only ``ONE reason to change``, hence it follows SRP.
 
+
+
 ```java
 
 class InvoiceCalculator{
-    public:
-    int calculateInvoice(){
+    public int calculateInvoice(){
         // logic to calculate invoice    
     }
-    
-};
+}
 
 
 class InvoicePrinter{
-    public:
-    void printInvoice(){
+    public void printInvoice(){
         // logic to print invoice
     }
 }
 
 
 class InvoiceSaver{
-    public:
-    void saveToDB(){
+    public void saveToDB(){
         // saves invoice to db
     }
-};
+}
 
 
 ```
@@ -160,6 +157,10 @@ Modification: It means to make changes in the existing code.
 
 Extension: It means adding new functionalities without altering/touching the existing code.
 
+- Open for Extension: extend existing behaviour.
+
+- Closed for Modification: existing code remains unchanged
+
 Example:- 
 
 If we have a class InvoiceSaver that currently saves the data in the DB, but now we want to save the data in the file as well. So, we have modified the InvoiceSaver class by adding the method saveToFile that saves the data to a file, as shown below👇But is this a good approach🤔? The answer is NO❌. 
@@ -186,37 +187,64 @@ We'll achieve that by using ``Interfaces`` and ``Abstract classes``.
 
 ## Code following Open/Close Principle
 
-```cpp
+```java
 
-// abstract class or we say interface
-class InvoiceSaver{
-    public:
-    
-    virtual void saveInvoice() = 0;
-};
+// interface
+interface InvoiceSaver{
+    public void saveInvoice();
+} 
 
 
-// overidden the base class
-class SaveInvoiceToDB : InvoiceSaver{
-    public:
-    
-    void saveInvoice(){
+class SaveInvoiceToDB implements InvoiceSaver{
+
+    @override
+    public void saveInvoice(){
         // logic to save to DB
-    }
-};
+    }     
+}
 
 
-// overidden the base class
-class SaveInvoiceToFile : InvoiceSaver{
-    public:
-    
-    void saveInvoice(){
-        // logic to save to file
+class SaveInvoiceToFile implements InvoiceSaver{
+
+    @override
+    public void saveInvoice(){
+        // logic to save to File
     }
-};
+}
 
 
 ```
+
+So, whenever we'll have a new functionality we'll just extend it:-
+
+```
+                  
+                      InvoiceSaver
+        /             |                \        \
+SaveInvoiceToDB    SaveInvoiceToFile    X       Y.....(any new functionality/extension)
+
+```
+
+</details>
+
+<br>
+
+
+<details>        <sumarry>        <h2> Liskov Substitution Principle(LSP) </h2>        </sumarry>        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </details>
