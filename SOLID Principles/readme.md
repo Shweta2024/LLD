@@ -1,5 +1,4 @@
-
-# Introduction
+<details> <summary> <h2> Introduction </h2> </summary> 
 
 The SOLID Principle was introduced by Robert C. Martin, also known as Uncle Bob.
 
@@ -43,32 +42,44 @@ modules/classes.
 Loose Coupled: Modules/Classes are called loosely coupled if they are independent of each other. A loosely coupled code is considered better because changes in one module/class won't affect any other modules/classes.
 Therefore, it makes our code flexible, stable, maintainable, and reusable.
 
-# Single Responsibility Principle
+</details>
+
+
+<details> <summary> <h2> Single Responsibility Principle </h2></summary>
 
 It states that:-
 
-1. A class or method should have **only ONE reason to change**.
-2. A class or method should have **only ONE responsibility**. 
+1. A Module should have **only ONE reason to change**.
+2. A Module should have **only ONE responsibility**. 
 
+        MODULE: here module refers to class or method or package. 
+
+NOTE: It means it should focused/concerned with ONLY one SPECIFIC task.
+
+- According to SRP, whenever we have n number of reasons for a class to change then, there must be n different classes to handle each responsibilities, so that whenever we need to make a 
+change then it can be done in an organised manner and without affecting other modules.
+
+
+### EXAMPLE-1
 
 ```cpp
 
 class Invoice{
-    
-    public int calculateInvoice(){
+    public:
+    int calculateInvoice(){
         // logic to find out invoice
         int total = price * quantity;
         return total;
     }
 
-    public void printInvoice(){
+    void printInvoice(){
         // print the invoice
     }
 
-    public void saveToDB(){
+    void saveToDB(){
         // save the invoice to db
     }
-}
+};
 
 
 ```
@@ -85,50 +96,63 @@ So we can see that there are 3 reasons for the class to change and hence it does
 
 In the below code, each of the classes has only ONE ``responsibility`` and only ``ONE reason to change``, hence it follows SRP.
 
-```cpp
+```java
 
 class InvoiceCalculator{
-    
-    public int calculateInvoice(){
+    public:
+    int calculateInvoice(){
         // logic to calculate invoice    
     }
     
-}
+};
 
 
 class InvoicePrinter{
-    
-    public void printInvoice(){
+    public:
+    void printInvoice(){
         // logic to print invoice
     }
-    
 }
 
 
 class InvoiceSaver{
-    
-    public void saveToDB(){
+    public:
+    void saveToDB(){
         // saves invoice to db
     }
-}
-
+};
 
 
 ```
 
 
+<br>
 
-
-> Why to follow SRP?
+### Why to follow SRP?
 
 If we have a class that handles many responsibilities then it will have many reasons to change, and if we make a change in the logic of any of the methods then it might affect the other methods. Additionally, it becomes very complex, and difficult to understand and maintain, if all the logic is written inside a single class. 
 
 
 
+### EXAMPLE-2
+
+Let's say we have a class and it is sending a message to the server. Now, below are the possible reasons for the class to change.
+
+|    |  Reasons  | Earlier   | Now   |
+| ------- | -----   | --------   | ----------   |
+| 1.   |  Protocol change |  HTTP  | HTTPS   |
+| 2.   |  Message format | JSON   |  HTML  |
+| 3.   |  Communication Security Change  |  no authentication  | authentication required   |
+
+Now, the above class has 03 reasons to change, so it is not following SRP. We must write individual classes for each tasks, in-order to make it follow SRP.
+
+
+</details>
+
 <br>
 
   
-# Open-Close Principle
+<details>  <summary>  <h2>  Open-Close Principle  </h2>  </summary>  
 
 It states that a class should be ``OPEN for Extension`` but ``CLOSED for Modification``.
 
@@ -164,32 +188,35 @@ We'll achieve that by using ``Interfaces`` and ``Abstract classes``.
 
 ```cpp
 
-
-Interface InvoiceSaver{
+// abstract class or we say interface
+class InvoiceSaver{
+    public:
     
-    public void saveInvoice();
+    virtual void saveInvoice() = 0;
+};
+
+
+// overidden the base class
+class SaveInvoiceToDB : InvoiceSaver{
+    public:
     
-}
-
-
-class SaveInvoiceToDB implements InvoiceSaver{
-
-    @Override
-    public void saveInvoice(){
-        // logic to save invoice to db
+    void saveInvoice(){
+        // logic to save to DB
     }
+};
+
+
+// overidden the base class
+class SaveInvoiceToFile : InvoiceSaver{
+    public:
     
-}
-
-
-class SaveInvoiceToFile implements InvoiceSaver{
-
-    @Override
-    public void saveInvoice(){
-        // logic to save invoice to file
+    void saveInvoice(){
+        // logic to save to file
     }
-    
-}
+};
 
 
 ```
+
+
+</details>
