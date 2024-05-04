@@ -15,7 +15,7 @@ O: Open/Closed Principle
 
 L: Liskov Substitution Principle(LSP)
 
-I: 
+I: Interface Segregation Principle(ISP)
 
 D: 
 
@@ -294,4 +294,135 @@ class Cycle implements Vehicle{
   - So accroding to LSP, we should be able to substitute the object of the parent class with its child class without breaking the behaviour of the program.
     
  
+</details>
+
+
+<details>   <summary>     <h2>   Interface Segregation Principle     </h2>   </summary>    
+
+- Interface should be such that client should not implement unnecessary functions they do not need.
+- Clients should not be forced to depend unpon interfaces(in particular on the methods that are defined in the interfaces) that they do not use.
+
+* ***Interface Pollution***
+
+  We should **NOT** have:-
+  - Large Interface: should not create a large interface.
+  - Unrelated methods: should not put all the methods in one single interface and make all class implement it.
+ 
+- ***Signs of Interface Pollution***
+   - Classes having emplty implementations of the methods.
+   - Method implentations returning null or default/dummy values.
+   - Method implentations throwing UnsupportedOperationException(or similar).
+   
+  
+- So, ``Interface Segregation Principle`` states to divide a bigger interface, such that the methods of an individual interface are **higly cohesive**(i.e. they are inter-reated) and no class is forced to implement unnecessary methods.
+
+  
+### EXAMPLE:-
+
+```java
+
+
+interface RestaurantEmployee{
+    void washDishes();
+    void serveFood();
+    void cookFood();
+}
+
+
+class Waiter implements RestaurantEmployee{
+    
+    public washDishes(){
+        // not my job
+    }
+    
+    public serveFood(){
+        // logic to serve food
+        System.out.println("serving food to customer");
+    }
+    
+    public cookFood(){
+        // not my job
+    }
+}
+
+class Cook implements RestaurantEmployee{
+    
+    public washDishes(){
+        // not my job
+    }
+    
+    public serveFood(){
+        // not my job
+    }
+    
+    public cookFood(){
+        // logic to cook food
+        System.out.println("cooking food");
+    }
+}
+
+```
+
+
+- In the above example we have an interface ``ResturantEmployee``, such that it contanis 03 functions: ``washDishes``, ``serveFood``, and ``cookFood``.
+- Both the ``Waiter`` and ``Cook`` class implements it.
+- However, we can see that in case of ***Waiter Class***, only serveFood() method is getting used, the other two methods are unnecessary because it is not the job of a waiter to washDishes or cookFood.
+- Similarly, in case of the ***Cook Class***, only cookFood() method is geeting used and the rest two methods are unnecessary.
+- So, in case of both the classes they are implementing some unnecessary methods of the RestaurantEmployee interface. Therefore, the above code is **NOT** following ISP.
+
+- How to make it follow ISP?
+   
+   - This can be achieved by dividing the interface RestaurantEmployee such that no class implements unnecessary methods.
+
+### Code following Interface Segmented Principle👇
+
+```java 
+
+
+interface WaiterInterface{
+    void serveFood();
+    void takeOrder();
+}
+
+
+interface CookInterface{
+    void cookFood();
+    void decideMenu();
+}
+
+
+class Waiter implements WaiterInterface{
+
+    public void serveFood(){
+        // logic to serve food 
+        System.out.println("serving food");
+    }
+
+    public void takeOrder(){
+        // logic to take order 
+        System.out.println("taking order");
+    }
+}
+
+
+class Cook implements CookInterface{
+    
+    public void cookFood(){
+        // logic to cook food 
+        System.out.println("cooking food");
+    }
+    
+    public void decideMenu(){
+        // logic to decide menu 
+        System.out.println("deciding menu");
+    }
+}
+
+
+```
+- In the above code we can see that we have two interfaces: ``WaiterInterface`` and ``CookInterface``.
+- The Waiter Class implements the WaiterInterface and all its methods are getting used.
+- Similarly, the Cook Class implements the CookInterface and all its methods are getting used.
+- Since, none of the class implements any unnecessary method of the base interface, so the above code is following ISP.
+
 </details>
