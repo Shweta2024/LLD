@@ -434,6 +434,8 @@ class Cook implements CookInterface{
   - High-level Modules: modules that implements/provides business rules.
   - Low-level Modules: functionality which is very basic, such that it can be used anywhere.
 
+- So it means that: Code should not create objects of all of its dependencies itself. Dependencies should be provided to the code from outside.
+  
 ### EXAMPLE:-
 
 let's say we are a business and are using the servies of Jio to make call.
