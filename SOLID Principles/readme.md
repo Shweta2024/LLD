@@ -17,7 +17,7 @@ L: Liskov Substitution Principle(LSP)
 
 I: Interface Segregation Principle(ISP)
 
-D: 
+D: Dependency Inversion Principle(DIP)
 
 ## Advantages of following the SOLID Principles:-
 
@@ -145,8 +145,6 @@ Now, the above class has 03 reasons to change, so it is not following SRP. We mu
 
 
 </details>
-
-<br>
 
   
 <details>  <summary>  <h2>  Open-Close Principle  </h2>  </summary>  
@@ -425,4 +423,192 @@ class Cook implements CookInterface{
 - Similarly, the Cook Class implements the CookInterface and all its methods are getting used.
 - Since, none of the class implements any unnecessary method of the base interface, so the above code is following ISP.
 
+</details>
+
+
+<details>    <summary>     <h2>    Dependency Inversion Principle    </h2>   </summary>   
+
+- High-Level Modules should not depend on Low-Level Modules, both should depend on abstractions/interface.
+- In other words, classes should depend on interfaces rather than concrete classes.
+
+  - High-level Modules: modules that implements/provides business rules.
+  - Low-level Modules: functionality which is very basic, such that it can be used anywhere.
+
+### EXAMPLE:-
+
+let's say we are a business and are using the servies of Jio to make call.
+
+- Jio.java
+  
+```java
+
+// this is a low-level module
+public class Jio{
+    
+    public void makeCall(int stdCode, int phoneNo){
+        System.out.println("Using the services of Jio to call: "+stdCode+"-"+phoneNo);
+    }
+}
+
+
+```
+
+- BusinessLogicClass.java
+
+```java
+
+
+// this is the high-level module
+public class BusinessLogicClass{
+    
+    public static void main(String args[]){
+        
+        int stdCode = 91;
+        int phoneNo = 987654321;
+        
+        // making call via Jio network
+        Jio jio = new Jio();
+        jio.makeCall(stdCode,phoneNo);
+    }
+}
+
+
+```
+
+- Now, let's say the prices of Jio services went high and we can't afford it, so we now want to use Airtel network.
+
+Below are the changes that we'll have to make.
+
+- Airtel.java
+```java
+
+
+// this is a low-level module
+public class Airtel{
+    
+    public void makeCall(int stdCode, int phoneNo){
+        System.out.println("Using the services of Airtel to call: "+stdCode+"-"+phoneNo);
+    }
+}
+
+
+```
+- BusinessLogicClass.java
+
+```java
+
+  
+// this is the high-level module
+public class BusinessLogicClass{
+    
+    public static void main(String args[]){
+        
+        int stdCode = 91;
+        int phoneNo = 987654321;
+        
+        // // making call via Jio network
+        // Jio jio = new Jio();
+        // jio.makeCall(stdCode,phoneNo);
+        
+        // making call via Airtel network
+        Airtel airtel = new Airtel();
+        airtel.makeCall(stdCode,phoneNo);
+    }
+}
+
+```
+
+- So, in the above example we can see that whereever we were using the object of the Jio class, we have replaced it with the object of the Airtel class. So, in real life cases we would be using it at multiples places and making changes to multiple places will give a potential threat of new bugs in code.
+
+### Problems that we'll face if not used DIP
+
+- Replacement of a class will cause changes in all the places where that class was injected(i.e. wherever we are using its object).
+- Unit tests becomes difficult, as Mock dependency for all low-level classes is required.
+
+### So how do we make our code to follow DIP?
+
+We can acheive it by making an interface, which will get implemented by all the low-level modules and we'll be injecting the interface in the high-level module instead of injecting the object of the concrete class.
+
+
+### Code following DIP👇
+
+- Network.java
+```java
+
+// interface
+public interface Network{
+    
+    public void makeCall(int stdNo, int phoneNo);
+    
+}
+
+```
+
+- Airtel.java
+
+```java
+
+
+// this is a low-level module
+public class Airtel implements Network{
+    
+    public void makeCall(int stdCode, int phoneNo){
+        System.out.println("Using the services of Airtel to call: "+stdCode+"-"+phoneNo);
+    }
+}
+
+```
+
+- Jio.java
+
+```java
+
+// this is a low-level module
+public class Jio implements Network{
+    
+    public void makeCall(int stdCode, int phoneNo){
+        System.out.println("Using the services of Jio to call: "+stdCode+"-"+phoneNo);
+    }
+}
+
+```
+
+- BusinessLogicClass.java
+  
+```java
+
+
+// this is the high-level module
+public class BusinessLogicClass{
+    
+    public static void main(String args[]){
+        
+        int stdCode = 91;
+        int phoneNo = 987654321;
+
+        // injecting interface rather than object of the Jio class
+        // making call via Jio network
+        Network network = new Jio(); // line 12
+        network.makeCall(stdCode,phoneNo);
+    }
+}
+
+
+```
+
+```
+
+        Network
+         /   \
+      Jio     Airtel
+
+
+```
+
+- We created a ``Network`` interface, both the low-level modules: Jio and Airtel class implements it.
+- Now, the high-level module uses the object of the ``Network`` interface instead of the object of any low-level module.
+- Now, if we want switch to Airtel network instead of Jio, we just need to write ``new Airtel`` at line 12, and won't need to make any changes anywhere in the code.
+- Thus, the above code follows DIP.
+
+ 
 </details>
