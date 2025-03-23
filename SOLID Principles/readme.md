@@ -436,7 +436,7 @@ class Cook implements CookInterface{
 
 - So it means that: Code should not create objects of all of its dependencies itself. Dependencies should be provided to the code from outside.
   
-### EXAMPLE:-
+### EXAMPLE 1 :-
 
 let's say we are a business and are using the servies of Jio to make call.
 
@@ -463,7 +463,7 @@ public class Jio{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public void CallingService(){
+    public void callingService(){
         
         int stdCode = 91;
         int phoneNo = 987654321;
@@ -503,7 +503,7 @@ public class Airtel{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public void CallingService(){
+    public void callingService(){
         
         int stdCode = 91;
         int phoneNo = 987654321;
@@ -583,7 +583,7 @@ public class Jio implements Network{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public void CallingService(Network network)
+    public void callingService(Network network)
         
         int stdCode = 91;
         int phoneNo = 987654321;
@@ -609,6 +609,47 @@ public class BusinessLogicClass{
 - Now, the high-level module uses the object of the ``Network`` interface instead of the object of any low-level module.
 - Now, if we want switch to Airtel network, we just need to pass ``Airtel`` as the Network in ``CallingService`` method as paramater, and won't need to make any changes anywhere in the code, the same for Jio network.
 - Thus, the above code follows DIP.
+
+### EXAMPLE 2 :-
+
+```java
+
+public void generateReport(){
+
+    Report report = new Report();
+    
+    // format the report
+    JSONFormatter formater = new JSONFormatter();
+    string report = formater.format(report);
+    
+    // write report to disk
+    writer = new FileWriter("report.json");
+    writer.write(report);
+}
+
+```
+
+- The above high-level module(generateReport) implements two low-level modules: JSONFormatter and FileWritter, for formating the report to JSON and then to write it to disk.
+- Let's say in future, we want to format the report in HTML or some other format, and to post the created report to some other server instead of writing to disk. In that case, we'll have to update the business logic of our high-level module(i.e. generateReport()) by replacing the objects of the required low-level modules with current low-level modules. Which is not a good practice.
+
+#### Code following DIP 👇
+
+```java
+
+public void generateReport(Formater formater, Witer writer){
+
+    Report report = new Report();
+    
+    // format the report
+    formater.format(report);
+    
+    // write report to disk
+    writer.write(report);
+}
+
+```
+
+- In the above method, if we want to use a different formatter/writer we just need to pass them in the parameter and our business logic will remain the same.
 
  
 </details>
