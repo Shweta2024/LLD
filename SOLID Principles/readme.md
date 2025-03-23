@@ -463,7 +463,7 @@ public class Jio{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public static void main(String args[]){
+    public void CallingService(){
         
         int stdCode = 91;
         int phoneNo = 987654321;
@@ -503,7 +503,7 @@ public class Airtel{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public static void main(String args[]){
+    public void CallingService(){
         
         int stdCode = 91;
         int phoneNo = 987654321;
@@ -583,14 +583,12 @@ public class Jio implements Network{
 // this is the high-level module
 public class BusinessLogicClass{
     
-    public static void main(String args[]){
+    public void CallingService(Network network)
         
         int stdCode = 91;
         int phoneNo = 987654321;
 
-        // injecting interface rather than object of the Jio class
-        // making call via Jio network
-        Network network = new Jio(); // line 12
+        // injecting interface rather than object of the Jio/Airtel class
         network.makeCall(stdCode,phoneNo);
     }
 }
@@ -601,15 +599,15 @@ public class BusinessLogicClass{
 ```
 
         Network
-         /   \
-      Jio     Airtel
+         /   \       \
+      Jio     Airtel    .....
 
 
 ```
 
 - We created a ``Network`` interface, both the low-level modules: Jio and Airtel class implements it.
 - Now, the high-level module uses the object of the ``Network`` interface instead of the object of any low-level module.
-- Now, if we want switch to Airtel network instead of Jio, we just need to write ``new Airtel`` at line 12, and won't need to make any changes anywhere in the code.
+- Now, if we want switch to Airtel network, we just need to pass ``Airtel`` as the Network in ``CallingService`` method as paramater, and won't need to make any changes anywhere in the code, the same for Jio network.
 - Thus, the above code follows DIP.
 
  
