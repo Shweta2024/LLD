@@ -71,3 +71,13 @@
     in the builder, which reduces the flexibility and maintainibility of the code.
 
 </details>
+
+<details>
+  <summary>
+    <h2>Design Considerations</h2>
+  </summary>
+
+  - The director is rarely implemented as a seperate class, typically the consumer of this object or the client handles this role.
+  - Abstract builder is also not required if Product itself is not part of any inheritence hierarchy. We can directly create concrete builder.
+  - If we are running into a constructor with too many arguments, then its a good indication to use builder pattern.
+</details>
