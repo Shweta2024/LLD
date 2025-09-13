@@ -56,4 +56,44 @@
   
 </details>
 
+
+
+<details>
+  <summary>
+    <h2> Implemetation steps</h2>
+  </summary>
+
+  - How can we create a class, s/t no other classes can create an instance of it/no objects can be created for it?
+
+    We can mark its constructor as ``private``, because in order to create an object the constructor gets called.
+
+    Now, we have successfully prevented the creation of object/instance of this class by ``Constructor hiding``.
+
+    ```java
+
+    public class Database{
+      private Database(){
+      }
+    }
+    
+    ```
+    
+
+
+  
+</details>
+
+
+
+
+
+
+
+
+
+
+
+### miscellaneous
+
+- every object that spring creates is singleton -- and it is called Beans. @TODO ---- understand this from gogu
   
