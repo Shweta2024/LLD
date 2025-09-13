@@ -1,9 +1,12 @@
-## Singleton
+## Singleton Design pattern
+
+> It allows us to create ONLY ONE INSTANCE of a class.
 
 <details>
   <summary>
     <h2>Problems</h2>
   </summary>
+
 
   1. ``Logger``
      
@@ -37,8 +40,20 @@
      part of the app uses the same config without reloading or duplicating.
 
      
-     
 </details>
 
+
+<details>
+  <summary>
+    <h2>
+      When to use singleton design pattern?
+    </h2>
+  </summary>
+
+1.  Shared Resources
+2.  Single source of truth/Consistency
+3.  Creating multiple instances is resource intensive.
+  
+</details>
 
   
