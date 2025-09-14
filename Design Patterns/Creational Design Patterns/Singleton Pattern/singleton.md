@@ -132,6 +132,32 @@
 3. Static attribute (to store the instance of the class)
 4. Logic: if instance ----> return it; otherwise create an instance and store it and then return.
 
+```java
+
+public class ConnectionPool{
+
+    // Step3: static attribute to store instance
+    private static ConnectionPool INSTANCE = null;
+    
+    // Step1: ctor hiding
+    private ConnectionPool(){
+    }
+    
+    // Step2: static initializer
+    public static ConnectionPool getInstance(){
+        if (INSTANCE == null){
+            INSTANCE = new ConnectionPool();
+        }
+        return INSTANCE;
+    }
+
+}
+
+```
+
+
+doubts --- @ 1:55:00 ---- thread safety and synchronized ---- understand from gogu 
+
 </details>
 
 
