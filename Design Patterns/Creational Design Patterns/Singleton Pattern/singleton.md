@@ -132,6 +132,8 @@
 3. Static attribute (to store the instance of the class)
 4. Logic: if instance ----> return it; otherwise create an instance and store it and then return.
 
+To implement the getInstance() method, we need to create a static variable of the class. This variable will hold the instance of the class. We'll initialize this variable to null. The getInstance() method will check if the instance is null. If it is null, it'll create a new instance and assign it to the static instance variable. Finally, it'll return the instance variable. This is called ``lazy initialization``.
+
 ```java
 
 public class ConnectionPool{
@@ -145,6 +147,7 @@ public class ConnectionPool{
     
     // Step2: static initializer
     public static ConnectionPool getInstance(){
+        // Step4: logic
         if (INSTANCE == null){
             INSTANCE = new ConnectionPool();
         }
